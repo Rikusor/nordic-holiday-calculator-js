@@ -46,14 +46,11 @@ function advanceMonth(ctx: Context): Context {
   };
 }
 
-export function next(
-  country: Country,
-  count?: number,
+function collectNextHolidays(
+  ctx: Context,
+  limit: number,
   includeWeekends?: boolean,
 ): Holiday[] {
-  let ctx = createContext({ country });
-  const limit = count || 3;
-
   if (limit > MAX_HOLIDAYS) {
     throw Error(`Cannot request more than ${MAX_HOLIDAYS} holidays at once.`);
   }
@@ -79,6 +76,33 @@ export function next(
   }
 
   return holidays;
+}
+
+export function next(
+  country: Country,
+  count?: number,
+  includeWeekends?: boolean,
+): Holiday[] {
+  return collectNextHolidays(
+    createContext({ country }),
+    count || 3,
+    includeWeekends,
+  );
+}
+
+export function nextFrom(
+  fromYear: number,
+  fromMonth: number,
+  fromDay: number,
+  country: Country,
+  count?: number,
+  includeWeekends?: boolean,
+): Holiday[] {
+  return collectNextHolidays(
+    createContext({ year: fromYear, month: fromMonth, day: fromDay, country }),
+    count || 3,
+    includeWeekends,
+  );
 }
 
 export function byYear(

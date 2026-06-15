@@ -13,6 +13,24 @@ export function next(
   return calendar.next(country, count, includeWeekends);
 }
 
+export function nextFrom(
+  fromYear: number,
+  fromMonth: number,
+  fromDay: number,
+  country: Country,
+  count?: number,
+  includeWeekends?: boolean,
+) {
+  return calendar.nextFrom(
+    fromYear,
+    fromMonth,
+    fromDay,
+    country,
+    count,
+    includeWeekends,
+  );
+}
+
 export function year(
   year: number,
   country: Country,
